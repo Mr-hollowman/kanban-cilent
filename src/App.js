@@ -5,11 +5,11 @@ import { getUsers } from './utils/reducers/userSlice';
 
 function App() {
   const dispatch = useDispatch()
-  const {data, loading, error} = useSelector((state)=>state.users)
+  const {user, loading, error} = useSelector((state)=>state.users)
   useEffect(()=>{
     dispatch(getUsers({email:"nothing@gmail.com", password:"nothing"}))
   },[])
-  console.log(data,"user data");
+  console.log(user,"user data");
   return (
     <div>
       {loading && <h1>loading.....</h1>}
