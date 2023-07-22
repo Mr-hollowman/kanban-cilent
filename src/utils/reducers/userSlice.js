@@ -1,13 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { URL } from "../vars";
 
-export const getUsers = createAsyncThunk("users/getUsers", async (email,password) => {
-    const response = await axios({
-        method:"POST",
-        url:`${URL}/users/signin`,
-        body:{email:email, password:password}
+export const getUsers = createAsyncThunk("users/getUsers", async (cred) => {
+    const response = await axios.post(`${URL}/users/signin`,{email:cred.email, password:cred.password},{
+        'Content-Type': 'application/json'
     })
     return response.data
 })
@@ -28,7 +25,7 @@ export const userSlice = createSlice({
         })
         builder.addCase(getUsers.fulfilled, (state, action)=>{
             if(state.loading){
-                state.data = action.payload
+                state.user = action.payload
                 state.loading = false
             }
         })
