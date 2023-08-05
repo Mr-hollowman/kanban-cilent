@@ -7,6 +7,7 @@ import { store } from './utils/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import persistStore from 'redux-persist/es/persistStore';
+import ThemeDetection from './utils/ThemeDetection';
 
 const persistor = persistStore(store);
 
@@ -16,6 +17,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <ThemeDetection/>
         <App />
       </PersistGate>
     </Provider>

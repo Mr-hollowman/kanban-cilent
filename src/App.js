@@ -1,20 +1,26 @@
 import { useEffect } from 'react';
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from './utils/reducers/userSlice';
+import { changeTheme } from './utils/reducers/themeSlice';
+import { Box, Button, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material';
 
 function App() {
   const dispatch = useDispatch()
-  const {user, loading, error} = useSelector((state)=>state.users)
-  useEffect(()=>{
-    dispatch(getUsers({email:"nothing@gmail.com", password:"nothing"}))
-  },[])
-  console.log(user,"user data");
+  const { user, loading, error } = useSelector((state) => state.users)
+  const { theme } = useSelector(state => state.theme)
+  const defaultTheme = createTheme({
+    palette: {
+      mode: theme
+    }
+  })
   return (
-    <div>
-      {loading && <h1>loading.....</h1>}
-      {error && <h1>{error}</h1>}
-    </div>
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <Box>
+        {loading && <Typography>Loading.........</Typography>}
+        <Button onClick={() => dispatch(changeTheme(theme === "dark" ? "light" : "dark"))}>Change Theme</Button>
+      </Box>
+    </ThemeProvider>
   );
 }
 
