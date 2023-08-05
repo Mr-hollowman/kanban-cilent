@@ -5,10 +5,8 @@ import useThemePreference from './themePreference';
 
 const ThemeDetection = () => {
   const themePreference = useSelector((state) => state.theme.theme);
-  alert(themePreference + " theme Preference")
   const dispatch = useDispatch();
   const browserTheme = useThemePreference();
-  alert(browserTheme + " browser theme")
 
   useEffect(() => {
     if (themePreference === 'light' || themePreference === 'dark') {
