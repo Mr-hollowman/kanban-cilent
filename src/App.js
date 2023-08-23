@@ -1,12 +1,10 @@
-import { useEffect } from 'react';
 import './App.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeTheme } from './utils/reducers/themeSlice';
-import { Box, Button, CssBaseline, ThemeProvider, Typography, createTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
 
 function App() {
-  const dispatch = useDispatch()
-  const { user, loading, error } = useSelector((state) => state.users)
   const { theme } = useSelector(state => state.theme)
   const defaultTheme = createTheme({
     palette: {
@@ -16,10 +14,11 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <Box>
-        {loading && <Typography>Loading.........</Typography>}
-        <Button onClick={() => dispatch(changeTheme(theme === "dark" ? "light" : "dark"))}>Change Theme</Button>
-      </Box>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
