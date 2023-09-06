@@ -6,12 +6,12 @@ const ProtectedRoute = (props) => {
     const navigate = useNavigate();
     const user = useSelector(state => state.user)
     const checkUser = () => {
-        (!user || user === "undefined") && navigate("/login");
+        (!user || user === "undefined" || !user?.user._id) && navigate("/login");
     };
     useEffect(() => {
         checkUser();
     }, [user]);
-    
+
     return (
         <React.Fragment>{user ? props.children : null}</React.Fragment>
     );
