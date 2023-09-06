@@ -1,9 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { logout } from '../utils/reducers/userSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector(state => state.user);
+  console.log(user,"user")
+
+  useEffect(() => {
+    !user.user?._id && navigate("/login")
+  }, [dispatch, user, logout])
   return (
     <div>
       nothign
+      <button onClick={() => {dispatch(logout()); console.log("clicked")}}>logout</button>
     </div>
   )
 }
