@@ -54,7 +54,7 @@ export default function Login() {
     if (credentials.name === "" || credentials.email === "" || credentials.password === "") {
       dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
     } else {
-      dispatch(getUsers(credentials)).then(() => {
+      dispatch(getUsers({...credentials, isSignUp})).then(() => {
         navigate("/")
       })
     }
