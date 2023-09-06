@@ -1,9 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { URL } from "../vars";
 
 export const getUsers = createAsyncThunk("users/getUsers", async (cred) => {
-    const response = await axios.post(`${URL}/users/signin`,{email:cred.email, password:cred.password},{
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/signin`,{email:cred.email, password:cred.password, name:cred.name},{
         'Content-Type': 'application/json'
     })
     return response.data
@@ -13,29 +12,36 @@ export const userSlice = createSlice({
     name: "users",
     initialState: {
         user: [],
-        loading: false,
+        isLoading: false,
         error: "",
     },
-    reducers: {},
+    reducers: {
+        logout:(state)=>{
+            state.user = []
+            state.isLoading = false
+            state.error = ""
+        }
+    },
     extraReducers: (builder)=>{
         builder.addCase(getUsers.pending, (state,action)=>{
-            if(!state.loading){
-                state.loading = true;
+            if(!state.isLoading){
+                state.isLoading = true;
             }
         })
         builder.addCase(getUsers.fulfilled, (state, action)=>{
-            if(state.loading){
+            if(state.isLoading){
                 state.user = action.payload
-                state.loading = false
+                state.isLoading = false
             }
         })
         builder.addCase(getUsers.rejected, (state, action)=>{
-            if(state.loading){
-                state.loading = false
+            if(state.isLoading){
+                state.isLoading = false
                 state.error = "Something went wrong, please try again later"
             }
         })
     },
 })
 
+export const { logout } = userSlice.actions;
 export default userSlice.reducer
