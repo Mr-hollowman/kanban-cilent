@@ -11,7 +11,7 @@ const ProtectedRoute = (props) => {
     useEffect(() => {
         checkUser();
     }, [user]);
-    console.log(user,"user details")
+    
     return (
         <React.Fragment>{user ? props.children : null}</React.Fragment>
     );
