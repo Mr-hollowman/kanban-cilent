@@ -14,7 +14,7 @@ import {
 import toastSlice from "./reducers/toastSlice";
 
 const rootReducers = combineReducers({
-    users: userSlice,
+    user: userSlice,
     theme: themeSlice,
     toast: toastSlice
 })
