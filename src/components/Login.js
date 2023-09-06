@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -12,9 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { triggerToast } from "../utils/reducers/toastSlice";
+import { getUsers } from "../utils/reducers/userSlice";
 
 function Copyright(props) {
   return (
@@ -37,9 +36,12 @@ function Copyright(props) {
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user);
   const [isSignUp, setIsSignup] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false)
+
+  useEffect(()=>{
+    user.user._id && navigate("/")
+  })
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,14 +51,13 @@ export default function Login() {
       password: data.get("password"),
       name: data.get("fullName"),
     };
-    if(credentials.name === "" || credentials.email === "" || credentials.password === "" ){
-      setError(true)
-      dispatch(triggerToast({open:true, severity:"warning", message:"All fields are mandatory"}))
-    }else{
-      setIsLoading(true);
-      console.log(credentials)
+    if (credentials.name === "" || credentials.email === "" || credentials.password === "") {
+      dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
+    } else {
+      dispatch(getUsers(credentials)).then(() => {
+        navigate("/")
+      })
     }
-    // axios.post()
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -119,9 +120,9 @@ export default function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            disabled={isLoading}
+            disabled={user?.isLoading}
           >
-            {isLoading ? "setting Up...." : isSignUp ? "Sign up" : "Sign in"}
+            {user?.isLoading ? "setting Up...." : isSignUp ? "Sign up" : "Sign in"}
           </Button>
           <Grid container>
             <Grid item>
