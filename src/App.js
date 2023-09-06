@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import ProtectedRoute from './utils/ProtectedRoutes';
 import Dashboard from './components/Dashboard';
+import Toaster from './utils/Toaster';
 
 function App() {
   const { theme } = useSelector(state => state.theme)
@@ -16,6 +17,7 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
+      <Toaster />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

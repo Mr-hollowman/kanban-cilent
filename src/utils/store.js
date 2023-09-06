@@ -11,10 +11,12 @@ import {
     PURGE,
     REGISTER,
 } from "redux-persist";
+import toastSlice from "./reducers/toastSlice";
 
 const rootReducers = combineReducers({
     users: userSlice,
     theme: themeSlice,
+    toast: toastSlice
 })
 
 const persistConfig = {

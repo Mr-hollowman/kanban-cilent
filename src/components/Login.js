@@ -12,7 +12,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { triggerToast } from "../utils/reducers/toastSlice";
 
 function Copyright(props) {
   return (
@@ -34,8 +36,10 @@ function Copyright(props) {
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const [isSignUp, setIsSignup] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,8 +49,14 @@ export default function Login() {
       password: data.get("password"),
       name: data.get("fullName"),
     };
-    setIsLoading(true);
-    console.log(credentials)
+    if(credentials.name === "" || credentials.email === "" || credentials.password === "" ){
+      setError(true)
+      dispatch(triggerToast({open:true, severity:"warning", message:"All fields are mandatory"}))
+    }else{
+      setIsLoading(true);
+      console.log(credentials)
+    }
+    // axios.post()
   };
   return (
     <Container component="main" maxWidth="xs">
