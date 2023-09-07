@@ -12,11 +12,13 @@ import {
     REGISTER,
 } from "redux-persist";
 import toastSlice from "./reducers/toastSlice";
+import boardSlice from "./reducers/boardSlice";
 
 const rootReducers = combineReducers({
     user: userSlice,
     theme: themeSlice,
-    toast: toastSlice
+    toast: toastSlice,
+    boards: boardSlice,
 })
 
 const persistConfig = {
