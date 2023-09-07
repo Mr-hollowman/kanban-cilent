@@ -39,7 +39,7 @@ export default function Login() {
   const user = useSelector(state => state.user);
   const [isSignUp, setIsSignup] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     user.user._id && navigate("/")
   })
 
@@ -54,8 +54,9 @@ export default function Login() {
     if (credentials.name === "" || credentials.email === "" || credentials.password === "") {
       dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
     } else {
-      dispatch(getUsers({...credentials, isSignUp})).then(() => {
+      dispatch(getUsers({ ...credentials, isSignUp })).then(() => {
         navigate("/")
+        dispatch(triggerToast({ open: true, severity: "success", message: isSignUp ? "Signed up Successfully" : "Login Success" }))
       })
     }
   };
