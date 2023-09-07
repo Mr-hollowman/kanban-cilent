@@ -3,19 +3,27 @@ import { logout } from '../utils/reducers/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
+import SideBar from './SideBar'
+import TodoContainer from './TodoContainer'
 
 export default function Dashboard() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const user = useSelector(state => state.user);
-  console.log(user,"user")
+  console.log(user, "user")
 
   useEffect(() => {
     !user.user?._id && navigate("/login")
   }, [dispatch, user, logout])
   return (
-    <div>
-      <NavBar />
+    <div style={{ display: 'flex' }}>
+      <div style={{ width: "20%" }}>
+        <SideBar />
+      </div>
+      <div style={{ width: '80%' }}>
+        <NavBar />
+        <TodoContainer />
+      </div>
     </div>
   )
 }

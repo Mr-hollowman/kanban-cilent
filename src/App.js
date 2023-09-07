@@ -12,8 +12,10 @@ function App() {
   const defaultTheme = createTheme({
     palette: {
       mode: theme,
-      borderColor: "#3E3F4E",
-      mainBackground:"#2B2C37"
+      borderColor: theme === "dark" ? "#3E3F4E": "#E4EBFA",
+      mainBackground: theme === "dark" ? "#2B2C37" : "#ffffff",
+      contentBackground: theme === "dark" ? "#20212C" : "#F4F7FD",
+      disabledFont: "#828fa3"
     }
   })
   return (
