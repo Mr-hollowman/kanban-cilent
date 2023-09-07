@@ -16,9 +16,9 @@ export default function Dashboard() {
   return (
     <div>
       <NavBar />
-      <div style={{display:"flex"}}>
-      <BoardsList />
-      <TodoContainer />
+      <div style={{ display: "flex" }}>
+        <BoardsList />
+        <TodoContainer />
       </div>
     </div>
   )
