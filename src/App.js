@@ -11,7 +11,9 @@ function App() {
   const { theme } = useSelector(state => state.theme)
   const defaultTheme = createTheme({
     palette: {
-      mode: theme
+      mode: theme,
+      borderColor: "#3E3F4E",
+      mainBackground:"#2B2C37"
     }
   })
   return (

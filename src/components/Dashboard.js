@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { logout } from '../utils/reducers/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import NavBar from './NavBar'
 
 export default function Dashboard() {
   const dispatch = useDispatch()
@@ -14,8 +15,7 @@ export default function Dashboard() {
   }, [dispatch, user, logout])
   return (
     <div>
-      nothign
-      <button onClick={() => {dispatch(logout()); console.log("clicked")}}>logout</button>
+      <NavBar />
     </div>
   )
 }
