@@ -3,8 +3,8 @@ import { logout } from '../utils/reducers/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
-import SideBar from './SideBar'
 import TodoContainer from './TodoContainer'
+import BoardsList from './BoardsList'
 
 export default function Dashboard() {
   const dispatch = useDispatch()
@@ -16,13 +16,11 @@ export default function Dashboard() {
     !user.user?._id && navigate("/login")
   }, [dispatch, user, logout])
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ width: "20%" }}>
-        <SideBar />
-      </div>
-      <div style={{ width: '80%' }}>
-        <NavBar />
-        <TodoContainer />
+    <div>
+      <NavBar />
+      <div style={{display:"flex"}}>
+      <BoardsList />
+      <TodoContainer />
       </div>
     </div>
   )

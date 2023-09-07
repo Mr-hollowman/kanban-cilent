@@ -1,6 +1,6 @@
 import './App.css';
 import { useSelector } from 'react-redux';
-import { Box, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import ProtectedRoute from './utils/ProtectedRoutes';
