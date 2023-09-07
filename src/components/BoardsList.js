@@ -1,4 +1,4 @@
-import { Box, Switch, Typography, colors } from '@mui/material'
+import { Box, Switch, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import { useTheme } from '@emotion/react';
