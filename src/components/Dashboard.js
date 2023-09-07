@@ -5,13 +5,15 @@ import NavBar from './NavBar'
 import TodoContainer from './TodoContainer'
 import BoardsList from './BoardsList'
 import HideSideBarButton from './HideSideBarButton'
+import Menu from './Menu'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const user = useSelector(state => state.user);
   const [hideSideBar, setHideSideBar] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const handleHideSideBar = ()=>{
+  const handleHideSideBar = () => {
     setHideSideBar(!hideSideBar)
   }
 
@@ -19,12 +21,13 @@ export default function Dashboard() {
     !user.user?._id && navigate("/login")
   }, [user])
   return (
-    <div>
-      <NavBar />
+    <div onClick={() => isMenuOpen ? setIsMenuOpen(false) : null}>
+      <NavBar setIsMenuOpen={setIsMenuOpen} />
       <div style={{ display: "flex" }}>
         {!hideSideBar && <BoardsList handleHideSideBar={handleHideSideBar} />}
         <TodoContainer />
         {hideSideBar && <HideSideBarButton handleHideSideBar={handleHideSideBar} />}
+        {isMenuOpen && <Menu />}
       </div>
     </div>
   )

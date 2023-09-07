@@ -6,17 +6,17 @@ import { flexBox } from '../styles/common';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ReactComponent as Logo } from '../assets/logo.svg'
 
-export default function NavBar() {
+export default function NavBar({ setIsMenuOpen }) {
   const theme = useTheme()
   return (
-    <Box sx={{ display:'flex', background: theme.palette.mainBackground, borderBottom: `1px solid ${theme.palette.borderColor}` }}>
-      <Box sx={{ display: "flex", minWidth:"250px", alignItems: 'center', gap: '20px', borderRight: `1px solid ${theme.palette.borderColor}`,  }}>
-        <Logo style={{marginLeft:"20px"}} />
+    <Box sx={{ display: 'flex', background: theme.palette.mainBackground, borderBottom: `1px solid ${theme.palette.borderColor}` }}>
+      <Box sx={{ display: "flex", minWidth: "250px", alignItems: 'center', gap: '20px', borderRight: `1px solid ${theme.palette.borderColor}`, }}>
+        <Logo style={{ marginLeft: "20px" }} />
         <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
           Kanban
         </Typography>
       </Box>
-      <Box sx={{ ...flexBox, justifyContent: "space-between", width: "100%", padding:"20px"}}>
+      <Box sx={{ ...flexBox, justifyContent: "space-between", width: "100%", padding: "20px" }}>
         <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
           Platform Launch
         </Typography>
@@ -25,7 +25,7 @@ export default function NavBar() {
             <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>+</Typography>
             <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>Add New Task</Typography>
           </Box>
-          <IconButton>
+          <IconButton onClick={() => setIsMenuOpen(true)}>
             <MoreVertIcon />
           </IconButton>
         </Box>
