@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <Box sx={{ display:'flex', background: theme.palette.mainBackground, borderBottom: `1px solid ${theme.palette.borderColor}` }}>
       <Box sx={{ display: "flex", minWidth:"250px", alignItems: 'center', gap: '20px', borderRight: `1px solid ${theme.palette.borderColor}`,  }}>
-        <Logo />
+        <Logo style={{marginLeft:"20px"}} />
         <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
           Kanban
         </Typography>

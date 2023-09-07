@@ -1,14 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import NavBar from './NavBar'
 import TodoContainer from './TodoContainer'
 import BoardsList from './BoardsList'
+import HideSideBarButton from './HideSideBarButton'
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const user = useSelector(state => state.user);
-  console.log(user, "user")
+  const [hideSideBar, setHideSideBar] = useState(false)
+
+  const handleHideSideBar = ()=>{
+    setHideSideBar(!hideSideBar)
+  }
 
   useEffect(() => {
     !user.user?._id && navigate("/login")
@@ -17,8 +22,9 @@ export default function Dashboard() {
     <div>
       <NavBar />
       <div style={{ display: "flex" }}>
-        <BoardsList />
+        {!hideSideBar && <BoardsList handleHideSideBar={handleHideSideBar} />}
         <TodoContainer />
+        {hideSideBar && <HideSideBarButton handleHideSideBar={handleHideSideBar} />}
       </div>
     </div>
   )
