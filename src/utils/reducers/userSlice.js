@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const getUsers = createAsyncThunk("users/getUsers", async (cred) => {
-    const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${cred.isSignUp ? "signup": "signin"}`,{email:cred.email, password:cred.password, name:cred.name},{
-        'Content-Type': 'application/json'
-    })
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/users/${cred.isSignUp ? "signup": "signin"}`,
+    {email:cred.email, password:cred.password, name:cred.name},
+    { withCredentials: true,  }
+    )
     return response.data
 })
 

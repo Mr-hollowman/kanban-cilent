@@ -54,7 +54,8 @@ export default function Login() {
     if (credentials.name === "" || credentials.email === "" || credentials.password === "") {
       dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
     } else {
-      dispatch(getUsers({ ...credentials, isSignUp })).then(() => {
+      dispatch(getUsers({ ...credentials, isSignUp })).then((res) => {
+        console.log(res.status,"statuys")
         navigate("/")
         dispatch(triggerToast({ open: true, severity: "success", message: isSignUp ? "Signed up Successfully" : "Login Success" }))
       })
