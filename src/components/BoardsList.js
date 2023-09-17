@@ -1,5 +1,5 @@
 import { Box, Switch, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import DashboardCustomizeOutlinedIcon from '@mui/icons-material/DashboardCustomizeOutlined';
 import { useTheme } from '@emotion/react';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeTheme } from '../utils/reducers/themeSlice';
 import { flexBox } from '../styles/common';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import { triggerModel } from '../utils/reducers/modelSlice';
+import { changeBoard } from '../utils/reducers/boardSlice';
 
 export default function BoardsList({ handleHideSideBar }) {
     const theme = useTheme();
     const dispatch = useDispatch();
-    const boards = useSelector(state=>state.boards);
-    const [selected, setSelected] = useState(boards.boards[0].title)
+    const boards = useSelector(state => state.boards);
     const pills = {
         display: 'flex', alignItems: "center", gap: "15px", padding: "10px", color: theme.palette.disabledFont, cursor: 'pointer', marginBottom: "10px"
     }
@@ -22,14 +23,14 @@ export default function BoardsList({ handleHideSideBar }) {
             <div style={{ minHeight: "400px" }}>
                 <Typography sx={{ padding: "20px", fontWeight: "bold", fontSize: 15, color: theme.palette.disabledFont }}>ALL BOARDS ({boards.boards.length})</Typography>
                 {!boards.loading && boards?.boards?.map((item, index) => {
-                    return (<div key={index} onClick={() => setSelected(item.title)} className={selected === item.title ? "active" : 'pills'} style={pills}>
+                    return (<div key={index} onClick={() => dispatch(changeBoard(item.title))} className={boards.selectedBoard === item.title ? "active" : 'pills'} style={pills}>
                         <DashboardCustomizeOutlinedIcon style={{ marginLeft: "10px" }} />
                         <Typography>{item.title}</Typography>
                     </div>)
                 })}
                 <div className='newBoard' style={pills}>
                     <DashboardCustomizeOutlinedIcon style={{ marginLeft: "10px" }} />
-                    <Typography> + Create New Board</Typography>
+                    <Typography onClick={() => dispatch(triggerModel({ title: "Create New Board", isBoards: true }))}> + Create New Board</Typography>
                 </div>
             </div>
             <div style={{}}>
@@ -40,7 +41,7 @@ export default function BoardsList({ handleHideSideBar }) {
                         onChange={() => dispatch(changeTheme(theme.palette.mode === "dark" ? "light" : "dark"))} />
                     <NightsStayOutlinedIcon />
                 </Box>
-                <Box onClick={() => handleHideSideBar()} sx={{ ...flexBox, justifyContent: "flex-start", margin: '20px', gap: '10px', color: theme.palette.disabledFont, cursor:"pointer" }}>
+                <Box onClick={() => handleHideSideBar()} sx={{ ...flexBox, justifyContent: "flex-start", margin: '20px', gap: '10px', color: theme.palette.disabledFont, cursor: "pointer" }}>
                     <VisibilityOffOutlinedIcon />
                     <Typography>Hide Sidebar</Typography>
                 </Box>

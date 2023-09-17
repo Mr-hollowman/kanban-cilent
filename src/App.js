@@ -6,6 +6,7 @@ import Login from './components/Login';
 import ProtectedRoute from './utils/ProtectedRoutes';
 import Dashboard from './components/Dashboard';
 import Toaster from './utils/Toaster';
+import MyModel from './utils/MyModel';
 
 function App() {
   const { theme } = useSelector(state => state.theme)
@@ -22,6 +23,7 @@ function App() {
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <Toaster />
+      <MyModel />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

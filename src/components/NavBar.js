@@ -5,9 +5,11 @@ import { IconButton, Typography } from '@mui/material';
 import { flexBox } from '../styles/common';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { ReactComponent as Logo } from '../assets/logo.svg'
+import { useSelector } from 'react-redux';
 
 export default function NavBar({ setIsMenuOpen }) {
   const theme = useTheme()
+  const { selectedBoard } = useSelector(state => state.boards)
   return (
     <Box sx={{ display: 'flex', background: theme.palette.mainBackground, borderBottom: `1px solid ${theme.palette.borderColor}` }}>
       <Box sx={{ display: "flex", minWidth: "250px", alignItems: 'center', gap: '20px', borderRight: `1px solid ${theme.palette.borderColor}`, }}>
@@ -18,7 +20,7 @@ export default function NavBar({ setIsMenuOpen }) {
       </Box>
       <Box sx={{ ...flexBox, justifyContent: "space-between", width: "100%", padding: "20px" }}>
         <Typography sx={{ fontSize: 25, fontWeight: "bold" }}>
-          Platform Launch
+          {selectedBoard}
         </Typography>
         <Box sx={{ ...flexBox, gap: "15px" }}>
           <Box sx={{ ...flexBox, color: "#fff", gap: "10px", borderRadius: "20px", background: "blue", padding: "10px 15px 10px 15px" }}>
