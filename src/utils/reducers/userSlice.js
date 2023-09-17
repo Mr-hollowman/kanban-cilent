@@ -6,7 +6,7 @@ export const getUsers = createAsyncThunk("users/getUsers", async (cred) => {
     {email:cred.email, password:cred.password, name:cred.name},
     { withCredentials: true,  }
     )
-    return response.data
+    return {...response.data, status:response.status}
 })
 
 export const userSlice = createSlice({

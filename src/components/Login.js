@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { triggerToast } from "../utils/reducers/toastSlice";
 import { getUsers } from "../utils/reducers/userSlice";
+import { getBoards } from "../utils/reducers/boardSlice";
 
 function Copyright(props) {
   return (
@@ -55,9 +56,11 @@ export default function Login() {
       dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
     } else {
       dispatch(getUsers({ ...credentials, isSignUp })).then((res) => {
-        console.log(res.status,"statuys")
-        navigate("/")
-        dispatch(triggerToast({ open: true, severity: "success", message: isSignUp ? "Signed up Successfully" : "Login Success" }))
+        if(res.payload.status === 200 ){
+          navigate("/")
+          dispatch(getBoards())
+          dispatch(triggerToast({ open: true, severity: "success", message: isSignUp ? "Signed up Successfully" : "Login Success" }))
+        }
       })
     }
   };

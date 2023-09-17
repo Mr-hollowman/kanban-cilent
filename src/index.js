@@ -10,7 +10,7 @@ import persistStore from 'redux-persist/es/persistStore';
 
 const persistor = persistStore(store);
 
-console.log(process.env.REACT_APP_API_URL,"node env")
+console.log(process.env.NODE_ENV,"node env")
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
