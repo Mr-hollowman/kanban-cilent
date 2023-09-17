@@ -23,7 +23,7 @@ export default function BoardsList({ handleHideSideBar }) {
             <div style={{ minHeight: "400px" }}>
                 <Typography sx={{ padding: "20px", fontWeight: "bold", fontSize: 15, color: theme.palette.disabledFont }}>ALL BOARDS ({boards.boards.length})</Typography>
                 {!boards.loading && boards?.boards?.map((item, index) => {
-                    return (<div key={index} onClick={() => dispatch(changeBoard(item.title))} className={boards.selectedBoard === item.title ? "active" : 'pills'} style={pills}>
+                    return (<div key={index} onClick={() => dispatch(changeBoard({ title: item.title, id: item._id }))} className={boards.selectedBoard === item.title ? "active" : 'pills'} style={pills}>
                         <DashboardCustomizeOutlinedIcon style={{ marginLeft: "10px" }} />
                         <Typography>{item.title}</Typography>
                     </div>)

@@ -5,7 +5,6 @@ export const getBoards = createAsyncThunk("boards/getAllBoards", async () => {
     const response = await axios.get(`${process.env.REACT_APP_API_URL}/boards/getBoards`,
         { withCredentials: true }
     )
-    console.log(response, "boards response")
     return response.data
 })
 
@@ -15,12 +14,14 @@ export const boardSlice = createSlice({
         boards: [],
         isLoading: false,
         error: "",
-        selectedBoard: ""
+        selectedBoard: "",
+        selectedBoardId: ""
     },
     reducers: {
         changeBoard: (state, action) => {
             if (state.selectedBoard !== action.payload) {
-                state.selectedBoard = action.payload
+                state.selectedBoard = action.payload.title
+                state.selectedBoardId = action.payload.id
             }
         },
         clearBoards: (state) => {
@@ -44,6 +45,7 @@ export const boardSlice = createSlice({
                 state.isLoading = false
                 state.error = ""
                 state.selectedBoard = action.payload[0].title
+                state.selectedBoardId = action.payload[0]._id
             }
         })
         builder.addCase(getBoards.rejected, (state, action) => {
