@@ -1,30 +1,28 @@
-import { useTheme } from '@emotion/react'
-import { Box } from '@mui/material'
-import axios from 'axios'
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { getUsers } from '../utils/reducers/userSlice'
+import { useTheme } from "@emotion/react";
+import { Box } from "@mui/material";
+import axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../utils/reducers/userSlice";
+import { getTasks } from "../utils/reducers/taskSlice";
 
-export default function TodoContainer({handleRequest}) {
-  const dispatch = useDispatch()
-    const theme = useTheme()
-    const getfn = async ()=>{
-        const res = await axios.get(`${process.env.REACT_APP_API_URL}/boards/getBoards`,{
-          withCredentials: true,
-        })
-        console.log(res.data,"res");
-    }
-    const handleLogin = async()=>{
-      dispatch(getUsers({"email":"nothing@gmail.com","password":"nothing", "isSignup":false})).then(res=>{
-        // const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/signin`,{email:"nothing@gmail.com", password:"nothing"})
-        // console.log(res,"res")
-      })
-    }
+export default function TodoContainer() {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const { selectedBoardId, isLoading } = useSelector((state) => state.boards);
+  console.log(isLoading, "isLoading on todoContainer");
+  useEffect(() => {
+    !isLoading && dispatch(getTasks(selectedBoardId));
+  }, [selectedBoardId]);
   return (
-    <Box sx={{width:'100%', height:"100vh", background:theme.palette.contentBackground}}>
-        nothin
-        <button onClick={()=>getfn()}>get board me</button>
-        <button onClick={()=>handleLogin()}>Login me</button>
+    <Box
+      sx={{
+        width: "100%",
+        height: "100vh",
+        background: theme.palette.contentBackground,
+      }}
+    >
+      nothin
     </Box>
-  )
+  );
 }

@@ -36,13 +36,13 @@ function Copyright(props) {
 
 export default function Login() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
-  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [isSignUp, setIsSignup] = useState(false);
 
   useEffect(() => {
-    user.user._id && navigate("/")
-  })
+    user.user._id && navigate("/");
+  });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -52,16 +52,32 @@ export default function Login() {
       password: data.get("password"),
       name: data.get("fullName"),
     };
-    if (credentials.name === "" || credentials.email === "" || credentials.password === "") {
-      dispatch(triggerToast({ open: true, severity: "warning", message: "All fields are mandatory" }))
+    if (
+      credentials.name === "" ||
+      credentials.email === "" ||
+      credentials.password === ""
+    ) {
+      dispatch(
+        triggerToast({
+          open: true,
+          severity: "warning",
+          message: "All fields are mandatory",
+        })
+      );
     } else {
       dispatch(getUsers({ ...credentials, isSignUp })).then((res) => {
-        if(res.payload.status === 200 ){
-          navigate("/")
-          dispatch(getBoards())
-          dispatch(triggerToast({ open: true, severity: "success", message: isSignUp ? "Signed up Successfully" : "Login Success" }))
+        if (res.payload.status === 200) {
+          navigate("/");
+          dispatch(getBoards());
+          dispatch(
+            triggerToast({
+              open: true,
+              severity: "success",
+              message: isSignUp ? "Signed up Successfully" : "Login Success",
+            })
+          );
         }
-      })
+      });
     }
   };
   return (
@@ -127,7 +143,11 @@ export default function Login() {
             sx={{ mt: 3, mb: 2 }}
             disabled={user?.isLoading}
           >
-            {user?.isLoading ? "setting Up...." : isSignUp ? "Sign up" : "Sign in"}
+            {user?.isLoading
+              ? "setting Up...."
+              : isSignUp
+              ? "Sign up"
+              : "Sign in"}
           </Button>
           <Grid container>
             <Grid item>

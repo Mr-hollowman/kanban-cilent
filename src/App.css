@@ -1,21 +1,21 @@
-.active{
-    background-color: #635fc7;
-    padding: '10px';
-    margin: 0 10px 0 0;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    color: #ffffff !important;
+.active {
+  background-color: #635fc7;
+  padding: "10px";
+  margin: 0 10px 0 0;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: #ffffff !important;
 }
-.pills:hover{
-    margin: 0 10px 0 0;
-    background-color: #A8A4FF;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-    color: #ffffff !important;
+.pills:hover {
+  margin: 0 10px 0 0;
+  background-color: #a8a4ff;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: #ffffff !important;
 }
-.newBoard{
-    color: #635fc7 !important;
+.newBoard {
+  color: #635fc7 !important;
 }
-.newBoard:hover{
-    opacity: 0.5;
+.newBoard:hover {
+  opacity: 0.5;
 }
