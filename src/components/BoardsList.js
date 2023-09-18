@@ -15,7 +15,7 @@ export default function BoardsList({ handleHideSideBar }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const boards = useSelector((state) => state.boards);
-  console.log(boards, "boards");
+
   const pills = {
     display: "flex",
     alignItems: "center",
@@ -29,7 +29,7 @@ export default function BoardsList({ handleHideSideBar }) {
     <Box
       sx={{
         overflowY: "auto",
-        height: "90vh",
+        height: "87vh",
         minWidth: "250px",
         maxWidth: "250px",
         background: theme.palette.mainBackground,

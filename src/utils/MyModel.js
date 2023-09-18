@@ -46,7 +46,6 @@ export default function MyModel() {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     axios.post(
       `${process.env.REACT_APP_API_URL}/boards/createBoard`,
       { title: data.name, columns: ["todo", "doing", "done"] },

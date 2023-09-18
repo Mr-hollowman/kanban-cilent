@@ -8,7 +8,7 @@ export const getTasks = createAsyncThunk(
       `${process.env.REACT_APP_API_URL}/boards/getTasks?boardId=${selectedBoardId}`,
       { withCredentials: true }
     );
-    return { ...response.data, status: response.status };
+    return { tasks: response.data, status: response.status };
   }
 );
 
@@ -18,6 +18,7 @@ export const taskSlice = createSlice({
     tasks: [],
     isLoading: false,
     error: "",
+    status: undefined,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -30,9 +31,10 @@ export const taskSlice = createSlice({
     });
     builder.addCase(getTasks.fulfilled, (state, action) => {
       if (state.isLoading) {
-        state.tasks = action.payload;
+        state.tasks = action.payload.tasks;
         state.isLoading = false;
         state.error = "";
+        state.status = action.payload.status;
       }
     });
     builder.addCase(getTasks.rejected, (state, action) => {
