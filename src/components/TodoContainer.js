@@ -17,9 +17,8 @@ export default function TodoContainer() {
   const selectedBoardData = boards.filter(
     (item) => item._id === selectedBoardId
   );
-  console.log(selectedBoardData, "columns");
+  
   const { tasks } = useSelector((state) => state.tasks);
-  console.log(tasks, "tasks");
 
   useEffect(() => {
     !isLoading && dispatch(getTasks(selectedBoardId));
@@ -52,7 +51,7 @@ export default function TodoContainer() {
             </Box>
             {tasks.map((task, index) => {
               if (item === task.column) {
-                return <Box>{task.title}</Box>;
+                return <Box key={item}>{task.title}</Box>;
               } else {
                 <></>;
               }

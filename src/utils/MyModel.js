@@ -15,6 +15,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import { flexBox } from "../styles/common";
 import axios from "axios";
 import { getBoards } from "./reducers/boardSlice";
+import CreateBoard from "./CreateBoard";
+import CreateTask from "./CreateTask";
+import { getTasks } from "./reducers/taskSlice";
 
 export default function MyModel() {
   const theme = useTheme();
@@ -31,6 +34,7 @@ export default function MyModel() {
   };
   const dispatch = useDispatch();
   const { open, title, isBoards } = useSelector((state) => state.model);
+  const { selectedBoardId } = useSelector((state) => state.boards);
   const {
     register,
     handleSubmit,
@@ -39,122 +43,50 @@ export default function MyModel() {
     reset,
   } = useForm();
 
-  const [columnCount, setColumnCount] = useState([]);
+  const [columnCount, setColumnCount] = useState(isBoards ? [] : [{}]);
 
   const handleClose = () => {
     dispatch(closeModel());
   };
 
   const onSubmit = (data) => {
-    axios.post(
-      `${process.env.REACT_APP_API_URL}/boards/createBoard`,
-      { title: data.name, columns: ["todo", "doing", "done"] },
-      { withCredentials: true }
-    );
-    dispatch(getBoards());
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/boards/createBoard`,
+        { title: data.name, columns: ["todo", "doing", "done"] },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.status === 200) dispatch(getBoards());
+      });
     handleClose();
     reset();
   };
 
-  const handleCreateBoard = () => {
-    return (
-      <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <InputLabel
-          htmlFor="name"
-          sx={{ fontWeight: "bold", fontSize: 15, marginBottom: 1 }}
-        >
-          Name
-        </InputLabel>
-        <OutlinedInput
-          autoFocus
-          {...register("name", { required: true })}
-          id="name"
-          size="small"
-          fullWidth={true}
-        />
-        <InputLabel
-          htmlFor="column"
-          sx={{
-            fontWeight: "bold",
-            fontSize: 15,
-            marginBottom: 1,
-            marginTop: 2,
-          }}
-        >
-          Column
-        </InputLabel>
-        <Box sx={[flexBox, { gap: 2 }]}>
-          <OutlinedInput
-            {...register("column", { required: true })}
-            id="column"
-            size="small"
-            fullWidth={true}
-          />
-          {columnCount.length > 0 && (
-            <CloseIcon
-              onClick={() =>
-                setColumnCount(columnCount.slice(0, columnCount.length - 1))
-              }
-            />
-          )}
-        </Box>
-        {columnCount.length > 0 &&
-          columnCount.map((item, index) => {
-            return (
-              <Box key={item.name} sx={[flexBox, { gap: 2 }]}>
-                <OutlinedInput
-                  {...register(`column${item.name}`, { required: true })}
-                  id={`column${index}`}
-                  size="small"
-                  fullWidth={true}
-                  sx={{ marginTop: 1 }}
-                />
-                <CloseIcon
-                  onClick={() =>
-                    setColumnCount(
-                      columnCount.filter((item2, index2) => index2 != index)
-                    )
-                  }
-                />
-              </Box>
-            );
-          })}
-        <Button
-          onClick={() =>
-            columnCount.length <= 4
-              ? setColumnCount((prev) => [
-                  ...prev,
-                  { name: columnCount.length + 1 },
-                ])
-              : null
-          }
-          fullWidth={true}
-          variant="contained"
-          sx={{
-            marginTop: 5,
-            borderRadius: 5,
-            background: "#fff",
-            color: "#635FC7",
-          }}
-        >
-          + Add New Column
-        </Button>
-        <Button
-          type="submit"
-          fullWidth={true}
-          variant="contained"
-          sx={{
-            marginTop: 5,
-            borderRadius: 5,
-            background: "#635FC7",
-            color: "#fff",
-          }}
-        >
-          Create New Board
-        </Button>
-      </form>
-    );
+  const onSubmitTask = (data) => {
+    const nothing = {
+      title: data.title,
+      desc: data.desc,
+      column: data.status,
+      subTask: [{ title: "my first subtask" }, { title: "my second subtask" }],
+      boardId: selectedBoardId,
+    };
+    console.log(nothing, "form data");
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}/boards/createTask`,
+        { ...nothing },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          dispatch(getTasks(selectedBoardId));
+          handleClose();
+        }
+      });
+    reset();
   };
+
   return (
     <Modal
       open={open}
@@ -166,7 +98,23 @@ export default function MyModel() {
         <Typography id="modal-modal-title" variant="h6" component="h2">
           {title}
         </Typography>
-        {handleCreateBoard()}
+        {isBoards ? (
+          <CreateBoard
+            onSubmit={onSubmit}
+            register={register}
+            handleSubmit={handleSubmit}
+            columnCount={columnCount}
+            setColumnCount={setColumnCount}
+          />
+        ) : (
+          <CreateTask
+            onSubmit={onSubmitTask}
+            register={register}
+            handleSubmit={handleSubmit}
+            columnCount={columnCount}
+            setColumnCount={setColumnCount}
+          />
+        )}
       </Box>
     </Modal>
   );

@@ -5,9 +5,11 @@ import { IconButton, Typography } from "@mui/material";
 import { flexBox } from "../styles/common";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { ReactComponent as Logo } from "../assets/logo.svg";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { triggerModel } from "../utils/reducers/modelSlice";
 
 export default function NavBar({ setIsMenuOpen }) {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const { selectedBoard } = useSelector((state) => state.boards);
   return (
@@ -55,7 +57,14 @@ export default function NavBar({ setIsMenuOpen }) {
             }}
           >
             <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>+</Typography>
-            <Typography sx={{ fontWeight: "bold", fontSize: 15 }}>
+            <Typography
+              sx={{ fontWeight: "bold", fontSize: 15 }}
+              onClick={() =>
+                dispatch(
+                  triggerModel({ title: "Create New Task", isBoards: false })
+                )
+              }
+            >
               Add New Task
             </Typography>
           </Box>
