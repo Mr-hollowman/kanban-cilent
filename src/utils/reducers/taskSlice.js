@@ -20,7 +20,13 @@ export const taskSlice = createSlice({
     error: "",
     status: undefined,
   },
-  reducers: {},
+  reducers: {
+    clearTask: (state) => {
+      state.tasks = [];
+      state.isLoading = false;
+      state.error = "";
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getTasks.pending, (state, action) => {
       if (!state.isLoading) {
@@ -47,5 +53,5 @@ export const taskSlice = createSlice({
   },
 });
 
-export const {} = taskSlice.actions;
+export const { clearTask } = taskSlice.actions;
 export default taskSlice.reducer;

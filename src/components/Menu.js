@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { clearBoards, getBoards } from "../utils/reducers/boardSlice";
 import { triggerToast } from "../utils/reducers/toastSlice";
+import { clearTask } from "../utils/reducers/taskSlice";
 
 export default function Menu() {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export default function Menu() {
   const handleLogout = () => {
     axios.post(process.env.REACT_APP_LOGOUT_URL, {}, { withCredentials: true });
     dispatch(clearBoards());
+    dispatch(clearTask());
     dispatch(logout());
   };
   const handleDeleteBoard = () => {

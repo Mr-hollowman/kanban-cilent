@@ -17,20 +17,22 @@ export default function TodoContainer() {
   const selectedBoardData = boards.filter(
     (item) => item._id === selectedBoardId
   );
-  
+
   const { tasks } = useSelector((state) => state.tasks);
+  console.log(tasks, "tasks");
 
   useEffect(() => {
     !isLoading && dispatch(getTasks(selectedBoardId));
-  }, [selectedBoardId]);
+  }, [selectedBoardId, isLoading]);
   return (
     <Box
       sx={{
         display: "flex",
         width: "100%",
-        // height: "100vh",
+        // height: "87vh",
         background: theme.palette.contentBackground,
-        overflow: "auto",
+        // overflow: "auto",
+        // overflowY:"scroll",
         padding: "10px",
       }}
     >
@@ -46,12 +48,42 @@ export default function TodoContainer() {
             <Box sx={{ display: "flex", gap: "5px" }}>
               <FiberManualRecordIcon />
               <Typography>
-                {item} ({count})
+                {item}({count})
               </Typography>
             </Box>
             {tasks.map((task, index) => {
+              // let totalCount = 0;
+              let activeCount = 0;
+              for (let j = 0; j < task.subTask.length; j++) {
+                if (task?.subTask[j].isActive === false) {
+                  activeCount += 1;
+                }
+              }
               if (item === task.column) {
-                return <Box key={item}>{task.title}</Box>;
+                return (
+                  <Box
+                    key={`${item}${index}`}
+                    sx={{
+                      background: theme.palette.mainBackground,
+                      padding: 2,
+                      margin: 4,
+                      borderRadius: 2,
+                    }}
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                      {task.title}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: 13,
+                        color: theme.palette.disabledFont,
+                      }}
+                    >
+                      {activeCount} of {task?.subTask?.length} Subtasks
+                    </Typography>
+                  </Box>
+                );
               } else {
                 <></>;
               }
