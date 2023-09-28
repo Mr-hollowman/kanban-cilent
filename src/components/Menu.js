@@ -45,6 +45,7 @@ export default function Menu() {
         background: "black",
       }}
     >
+    
       <span style={{ display: "block" }} onClick={handleLogout}>
         Logout
       </span>
